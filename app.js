@@ -10,6 +10,15 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
+// === CORS ===
+  const cors = require('cors');
+  app.use(
+    cors({
+      origin: '*'
+    })
+  )
+// ============
+
 // === Swagger UI ===
   const swaggerJSON = require('./swagger.json');
   const swaggerUI = require('swagger-ui-express');
