@@ -2,10 +2,12 @@
 
 var faker = require('faker')
 
+const { User_account } = require('../models')
+
 const users = [
   {
     username: 'admin',
-    password: 'admin',
+    password: User_account.encrypt('admin'),
     asAdmin: true,
     createdAt: new Date(),
     updatedAt: new Date
@@ -15,7 +17,7 @@ const users = [
 const users1 = [...Array(99)].map(user => (
   {
     username: faker.internet.userName(),
-    password: faker.internet.password(),
+    password: User_account.encrypt(faker.internet.password()),
     asAdmin: false,
     createdAt: new Date(),
     updatedAt: new Date()

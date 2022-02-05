@@ -19,6 +19,8 @@ module.exports = (sequelize, DataTypes) => {
 
     static #encrypt = (password) => bcrypt.hashSync(password, 10)
 
+    static encrypt = (password) => bcrypt.hashSync(password, 10)
+
     static register = ({ username, password }) => {
       const encryptedPassword = this.#encrypt(password)
       return this.create({username:username, password: encryptedPassword, asAdmin: false})
