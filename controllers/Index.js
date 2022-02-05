@@ -1,7 +1,7 @@
 /**
  *  Index Controller
  * 
- * @author Grotius Cendikia Hasiholan <grotius.hasiholan@gmail.com>
+ *  @author Grotius Cendikia Hasiholan <grotius.hasiholan@gmail.com>
  */
 
 var fs = require('fs');
