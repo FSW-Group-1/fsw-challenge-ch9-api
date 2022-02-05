@@ -8,6 +8,10 @@
   "basePath": "/",
   "tags": [
     {
+      "name": "Users",
+      "description": "Everything about user account settings"
+    },
+    {
       "name": "Players",
       "description": "Everything about Player settings"
     }
@@ -17,6 +21,75 @@
     "http"
   ],
   "paths": {
+    "/user/create": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Create user account",
+        "description": "Create user account",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "formdata",
+            "description": "Username of the account",
+            "required": "true",
+            "type": "string" 
+          },
+          {
+            "name": "password",
+            "in": "formdata",
+            "description": "Password of the account",
+            "required": "true",
+            "type": "string" 
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Account has been created succesfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "string",
+                  "example": "SUCCESS"
+                },
+                "new_account": {
+                  "type": "string",
+                  "example": "grotius.hasiholan"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Account has been created"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "There was an error when creating account",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "string",
+                  "example": "FAILED"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error in creating account"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/players": {
       "post": {
         "tags": [
