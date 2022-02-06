@@ -42,18 +42,44 @@ module.exports = (sequelize, DataTypes) => {
       return token
     }
 
+    // static authenticate = async({ username, password }) => {
+    //   try {
+    //     const user = await this.findOne({ where: { username } })
+    //     if(!user) return Promise.reject('User not found!')
+
+    //     const isPasswordValid = user.checkPassword(password)
+    //     if(!isPasswordValid) return Promise.reject('Wrong password!')
+
+    //     return Promise.resolve(user)
+    //   }
+    //   catch (error) {
+    //     return Promise.reject(error)
+    //   }
+    // }
+
     static authenticate = async({ username, password }) => {
-      try {
+      try{
         const user = await this.findOne({ where: { username } })
-        if(!user) return Promise.reject('User not found!')
-
+        if(!user)
+          return ({
+            result: 'FAILED',
+            message: 'User not found'
+          })
+        
         const isPasswordValid = user.checkPassword(password)
-        if(!isPasswordValid) return Promise.reject('Wrong password!')
-
-        return Promise.resolve(user)
+        if(!isPasswordValid)
+          return({
+            result: 'FAILED',
+            message: 'Wrong password!'
+          })
+        
+        return(user)
       }
       catch (error) {
-        return Promise.reject(error)
+        return({
+          result: 'FAILED',
+          message: 'There is something when authenticating account'
+        })
       }
     }
 

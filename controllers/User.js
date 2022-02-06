@@ -8,6 +8,11 @@
  const { User_account } = require('../models')
 
  const format = (user) => {
+     if(user.result == 'FAILED')
+        return({
+            result: 'FAILED',
+            message: user.message
+        })
      const { id, username, asAdmin } = user
      return ({
          id,
@@ -66,10 +71,29 @@
                 username: req.body.username,
                 password: req.body.password
             }
-            User_account.authenticate(input)
-                .then(user => {
-                    res.status(200).json(format(user))
+
+            if(input.username.length ==0 || input.password.length==0 ) {
+                res.status(400).json({
+                    result: 'FAILED',
+                    message: 'Please fullfill all form data!'
                 })
+            } else {
+                await User_account.findOne({ where: {username: input.username} })
+                    .then(async(result) => {
+                        if(!result) {
+                            res.status(400).json({
+                                result: 'FAILED',
+                                message: 'User not found!'
+                            })
+                        } else {
+                            await User_account.authenticate(input)
+                                .then(user => {
+                                    res.status(200).json(format(user))
+                                })
+                        }
+                    })
+            }
+
          }
          catch (error) {
              res.status(400).json({
