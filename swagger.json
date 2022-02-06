@@ -21,7 +21,7 @@
     "http"
   ],
   "paths": {
-    "/user/create": {
+    "/user/register": {
       "post": {
         "tags": [
           "Users"

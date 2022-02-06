@@ -6,6 +6,9 @@ const {
 //for encyptring password
 const bcrypt = require('bcrypt');
 
+//for jsonwebtoken
+const jwt = require('jsonwebtoken');
+
 module.exports = (sequelize, DataTypes) => {
   class User_account extends Model {
     /**
@@ -27,6 +30,17 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     checkPassword = (password) => bcrypt.compareSync(password, this.password)
+
+    generateToken = () => {
+      const payload = {
+        id: this.id,
+        username: this.username,
+        asAdmin: this.asAdmin
+      }
+      const secret = 'askdjn123jblkndf932'
+      const token = jwt.sign(payload, secret)
+      return token
+    }
 
     static authenticate = async({ username, password }) => {
       try {
